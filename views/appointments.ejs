@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Head -->
+  <%- include("layout/header") -%>
+  <body>
+    <!-- Navigation-->
+    <%- include("layout/navbar") -%>
+    <!-- Banner -->
+    <main class="banner-main">
+      <div class="banner-info">
+        <div class="heading">
+          <h1>ADD APPOINTMENT</h1>
+          <h2><a href="/" class="herf-tag">CLICK</a> HERE TO GO DASHBOARD</h2>
+        </div>
+      </div>
+    </main>
+
+    <section class="page-section" id="contact">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <div class="row">
+                                <% if(data) for(var i=0; i < data.length; i++) { %>
+                                    <div class="col-sm-6 mb-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div style="display: flex;">
+                                                    <div class="col-md-7">
+                                                        <h5 class="card-title">
+                                                            <%= data[i].firstname %>
+                                                        </h5>
+                                                    </div>
+                                                    <% if(isError && data[i]._id==id) {%>
+                                                        <div class="col-md-5">
+                                                            <h6 style="color: red">
+                                                                <%= errorMessage %>
+                                                            </h6>
+                                                        </div>
+                                                        <% } %>
+                                                </div>
+
+                                                <div style="display: flex;">
+                                                    <div class="col-sm-2" style="font-weight: 600;">
+                                                        <p>Make : </p>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <p>
+                                                            <%= data[i].car_details.make %>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div style="display: flex;">
+                                                    <div class="col-sm-2" style="font-weight: 600;">
+                                                        <p>Model : </p>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <p>
+                                                            <%= data[i].car_details.model %>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div style="display: flex;">
+                                                    <div class="col-sm-2" style="font-weight: 600;">
+                                                        <p>Year : </p>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <p>
+                                                            <%= data[i].car_details.year %>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn btn-primary"
+                                                    driverID="<%- data[i]._id %>"
+                                                    driverName="<%- data[i].firstname %> <%- data[i].lastname %>"
+                                                    data-bs-toggle="modal" data-bs-target="#Modal">
+                                                    update grad
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5>Filter by :</h5>
+                                    <div class="form-group">
+                                        <div class="btn-group appointment">
+                                            <input  onclick="window.location='/examiner-appointment/G2';" type="radio" class="btn-check" name="option1" id="option1"
+                                                autocomplete="off" value="G2" <%=filteredBy=="G2" ? 'checked' : '' %> />
+                                            <label class="btn btn-outline-primary" for="option1">G2</label>
+
+                                            <input onclick="window.location='/examiner-appointment/G';" type="radio" class="btn-check" name="option1" id="option2"
+                                                autocomplete="off" value="G" <%=filteredBy=="G" ? 'checked' : '' %> />
+                                            <label class="btn btn-outline-primary" for="option2">G</label>
+
+                                            <input onclick="window.location='/examiner-appointment';" type="radio" class="btn-check" name="option1" id="option3"
+                                                autocomplete="off" value="ALL" <%=filteredBy=="all" ? 'checked' : '' %> />
+                                            <label class="btn btn-outline-primary" for="option3">ALL</label>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="ModalLabel">Modal title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <form id="contactForm" action="/update-grad" method="POST">
+                                <div class="modal-body">
+                                    <div class="row align-items-stretch mb-5">
+                                        <div class="col-md-12">
+                                            <div class="row">
+
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <!-- date input-->
+                                                        <textarea class="form-control" id="examinerComment"
+                                                            name="examinerComment" rows="4" placeholder="Comment"
+                                                            data-sb-validations="required"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <div class="btn-group appointment">
+                                                            <input type="radio" class="btn-check" name="passfail"
+                                                                id="passfail" autocomplete="off" value="PASS" />
+                                                            <label class="btn btn-outline-primary"
+                                                                for="passfail">PASS</label>
+
+                                                            <input type="radio" class="btn-check" name="passfail"
+                                                                id="passfail1" autocomplete="off" value="FAIL" />
+                                                            <label class="btn btn-outline-primary"
+                                                                for="passfail1">FAIL</label>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+    <!-- Footer-->
+    <%- include("layout/footer") -%>
+    <!-- JS -->
+    <%- include("layout/script") -%>
+    <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                var Modal = document.getElementById('Modal')
+                Modal.addEventListener('show.bs.modal', function (event) {
+
+                    var button = event.relatedTarget
+                    var driverID = button.getAttribute('driverID')
+
+                    var element = document.createElement("input")
+
+                    element.setAttribute("value", driverID)
+                    element.setAttribute("name", "_id")
+                    element.setAttribute("type", "hidden")
+
+                    document.getElementById("contactForm").appendChild(element)
+
+                    var driverName = button.getAttribute('driverName')
+                    var modalTitle = Modal.querySelector('.modal-title')
+
+                    modalTitle.textContent = 'Test results for ' + driverName
+                })
+            })
+        </script>
+  </body>
+</html>

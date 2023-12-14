@@ -1,0 +1,33 @@
+<nav class="header">
+  <div class="container">
+    <div class="row1 header-row">
+      <a class="navbar-title">
+        <h1>LICENCE</h1>
+      </a>
+      <ul class="nav-ul">
+        <li><a href="/" class="nav-a">Dashborad</a></li>
+
+        <% if(loggedIn && loggedUserType == "Driver"){ %>
+        <li><a href="/g-test" class="nav-a">G test</a></li>
+        <li><a href="/g2-test" class="nav-a">G2 test</a></li>
+        <% } %> <% if(loggedIn && loggedUserType == "Admin"){ %>
+        <li>
+          <a href="/admin-appointment" class="nav-a">Appointment</a>
+        </li>
+        <li>
+          <a href="/display-result" class="nav-a">Result</a>
+        </li>
+        <% } %> <% if(loggedIn && loggedUserType == "Examiner"){ %>
+        <li>
+          <a href="/examiner-appointment" class="nav-a">appointments</a>
+        </li>
+        <% } %> <% if(loggedIn){ %>
+        <li><a href="/logout" class="nav-a">Logout</a></li>
+        <% } else { %>
+        <li><a href="/login" class="nav-a">Login</a></li>
+        <li><a href="/register" class="nav-a">Register</a></li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>

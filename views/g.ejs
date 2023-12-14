@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Head -->
+  <%- include("layout/header") -%>
+  <body>
+    <!-- Navigation-->
+    <%- include("layout/navbar") -%>
+    <!-- Banner -->
+    <main class="banner-main">
+      <div class="banner-info">
+        <div class="heading">
+          <h1>G TEST</h1>
+          <h2><a href="/" class="herf-tag">CLICK</a> HERE TO GO DASHBOARD</h2>
+        </div>
+      </div>
+    </main>
+
+    <!-- From -->
+    <div class="card container mt-5 mb-5" style="width: 60rem">
+      <div class="card-body">
+      <% if(isError) {%>
+        <h5 style="color: red; text-align: center">Pleae enter all data.</h5>
+      <% } %>
+      <% if(driver && driver?.appointmentID == null){ %>
+        <form
+          class="row g-3 needs-validation"
+          method="POST"
+          action="/save-driver"
+          id="contact-form"
+          name="contact-form"
+        >
+      <% } else { %>
+        <form
+          class="row g-3 needs-validation"
+          method="POST"
+          action="/update-driver"
+          id="contact-form"
+          name="contact-form"
+        >
+      <% } %>
+        
+          <div class="col-12">
+            <div class="form-check">
+              <label class="form-check-label" for="invalidCheck">
+                <h5>Personal Information:</h5>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">First name</label>
+            <input
+              class="form-control"
+              name="firstname"
+              id="firstname"
+              type="text"
+              placeholder="Enter first name"
+              required
+              value="<%- driver ?
+                  driver.firstname : "" %>"
+            />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Last name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="lastname"
+              name="lastname"
+              placeholder="enter last name"
+              required
+              value="<%- driver ?
+                  driver.lastname : "" %>"
+            />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">License Number</label>
+            <input
+              type="text"
+              class="form-control"
+              id="license_no"
+              name="license_no"
+              placeholder="Enter license number"
+              required
+              value="<%- driver ?
+                  driver.license_no : "" %>"
+            />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Age</label>
+            <input
+              type="number"
+              class="form-control"
+              id="age"
+              name="age"
+              placeholder="Enter age"
+              required
+              value="<%- driver ?
+                  driver.age : "" %>"
+            />
+          </div>
+          <div class="col-12">
+            <div class="form-check">
+              <label class="form-check-label" for="invalidCheck">
+                <h5>Car Details:</h5>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Make</label>
+            <input
+              type="text"
+              class="form-control"
+              id="make"
+              name="make"
+              placeholder="Enter make"
+              required
+              value="<%- driver ?
+                  driver.car_details.model : "" %>"
+            />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Model</label>
+            <input
+              type="text"
+              class="form-control"
+              id="model"
+              name="model"
+              placeholder="Enter model"
+              required
+              value="<%- driver ?
+                  driver.car_details.model : "" %>"
+            />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Year</label>
+            <input
+              type="number"
+              class="form-control"
+              id="year"
+              name="year"
+              placeholder="Enter year"
+              required
+              value="<%- driver ?
+                  driver.car_details.year : "" %>"
+            />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Plat number</label>
+            <input
+              type="text"
+              class="form-control"
+              id="platno"
+              name="platno"
+              placeholder="Enter plat number"
+              required
+              value="<%- driver ?
+                  driver.car_details.platno : "" %>"
+            />
+          </div>
+          <% if((driver && driver?.appointmentID==null) || (driver &&
+          driver?.appointmentType=="G" )){ %>
+          <div class="col-12">
+            <div class="form-check">
+              <label class="form-check-label" for="invalidCheck">
+                <h5>Book Appointment</h5>
+              </label>
+            </div>
+          </div>
+          <div class="col-12" style="display: flex">
+            <% if((driver && driver?.appointmentID == null)){ %>
+              <div class="col-md-4">
+                <label class="form-label">Date</label>
+                <input
+                  class="form-control"
+                  name="slotdate"
+                  id="slotdate"
+                  type="date"
+                  onchange="changeDateHandler()"
+                  placeholder="Enter first name"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <!-- slot input-->
+                  <div class="btn-group appointment">
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="option1"
+                      id="option1"
+                      autocomplete="off"
+                      value="09:00"
+                    />
+                    <label class="btn btn-outline-primary" for="option1"
+                      >9:00 - 9:30</label
+                    >
+
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="option1"
+                      id="option2"
+                      autocomplete="off"
+                      value="09:30"
+                    />
+                    <label class="btn btn-outline-primary" for="option2"
+                      >9:30 - 10:00</label
+                    >
+
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="option1"
+                      id="option3"
+                      autocomplete="off"
+                      value="10:00"
+                    />
+                    <label class="btn btn-outline-primary" for="option3"
+                      >10:00 - 10:30</label
+                    >
+
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="option1"
+                      id="option4"
+                      autocomplete="off"
+                      value="10:30"
+                    />
+                    <label class="btn btn-outline-primary" for="option4"
+                      >10:30 - 11:00</label
+                    >
+
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="option1"
+                      id="option5"
+                      autocomplete="off"
+                      value="11:00"
+                    />
+                    <label class="btn btn-outline-primary" for="option5"
+                      >11:00 - 11:30</label
+                    >
+
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="option1"
+                      id="option6"
+                      autocomplete="off"
+                      value="11:30"
+                    />
+                    <label class="btn btn-outline-primary" for="option6"
+                      >11:30 - 12:00</label
+                    >
+
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="option1"
+                      id="option7"
+                      autocomplete="off"
+                      value="12:00"
+                    />
+                    <label class="btn btn-outline-primary" for="option7"
+                      >12:00 - 12:30</label
+                    >
+
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="option1"
+                      id="option8"
+                      autocomplete="off"
+                      value="12:30"
+                    />
+                    <label class="btn btn-outline-primary" for="option8"
+                      >12:30 - 13:00</label
+                    >
+
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="option1"
+                      id="option9"
+                      autocomplete="off"
+                      value="13:00"
+                    />
+                    <label class="btn btn-outline-primary" for="option9"
+                      >13:00 - 13:30</label
+                    >
+
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="option1"
+                      id="option10"
+                      autocomplete="off"
+                      value="13:30"
+                    />
+                    <label class="btn btn-outline-primary" for="option10"
+                      >13:30 - 14:00</label
+                    >
+                  </div>
+                </div>
+              </div>
+            <% } %> <% if((driver && driver?.appointmentType=="G"
+              && driver?.testResult == null )){ %>
+                <div class="col-12" style="display: flex">
+                  <div class="col-12 card">
+                    <div class="card-body" style="text-align: center">
+                      <h3>Appointment Details</h3>
+                      <div style="display: flex">
+                        <div class="col-sm-2" style="font-weight: 600">
+                          <p>Date :</p>
+                        </div>
+                        <div class="col-sm-6">
+                          <p><%= driver.appointmentID.date %></p>
+                        </div>
+                      </div>
+                      <div style="display: flex">
+                        <div class="col-sm-2" style="font-weight: 600">
+                          <p>Time :</p>
+                        </div>
+                        <div class="col-sm-6">
+                          <p><%= driver.appointmentID.time %></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            <% } %> <% if((driver && driver?.testResult != null)){
+              %>
+              <div class="col-12" style="display: flex">
+                <div class="col-12 card">
+                  <div class="card-body">
+                    <h3>Result</h3>
+                      <% if(driver.testResult == "PASS") {%>
+                      <div style="display: flex; color: green">
+                        <div class="col-sm-2" style="font-weight: 600">
+                          <p>Result :</p>
+                        </div>
+                        <div class="col-sm-6">
+                          <p><%= driver.testResult %></p>
+                        </div>
+                      </div>
+                      <% } else {%>
+                      <div style="display: flex; color: red">
+                        <div class="col-sm-2" style="font-weight: 600">
+                          <p>Result :</p>
+                        </div>
+                        <div class="col-sm-6">
+                          <p><%= driver.testResult %></p>
+                        </div>
+                      </div>
+                      <% } %>
+                      <div style="display: flex">
+                        <div class="col-sm-2" style="font-weight: 600">
+                          <p>Comment :</p>
+                        </div>
+                        <div class="col-sm-6">
+                          <p><%= driver.comment %></p>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+          <% } %>
+
+          </div>
+          <% } %>
+          <div class="col-12 text-center">
+            <button type="submit" class="btn btn-dark">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer-->
+    <%- include("layout/footer") -%>
+    <!-- JS -->
+    <%- include("layout/script") -%>
+    <script>
+      const form = document.getElementById("contact-form");
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        var addInput = document.createElement("input");
+        addInput.setAttribute("type", "text");
+        addInput.setAttribute("name", "appointmentType");
+        addInput.setAttribute("value", "G");
+        addInput.style.display = "none";
+
+        form.appendChild(addInput);
+        form.submit();
+
+        addInput.remove();
+      });
+
+      const option1 = document.getElementsByName("option1");
+
+      const handleResponseError = (response) => {
+        if (!response.ok) {
+          throw response.status + ": " + response.statusText;
+        }
+        return response.json();
+      };
+
+      const fail = (error) => {
+        console.log("not found data");
+      };
+
+      const success = (data) => {
+        option1.forEach((tag) => {
+          data.getAppointment.forEach((value) => {
+            if (tag.value == value.time) {
+              tag.removeAttribute("disabled");
+              if (!value.isTimeSlotAvailable) {
+                tag.setAttribute("disabled", true);
+              }
+            }
+          });
+        });
+      };
+
+      const changeDateHandler = () => {
+        let date = document.getElementById("slotdate").value;
+        option1.forEach((tag) => {
+          tag.setAttribute("disabled", true);
+        });
+        const url = window.location.origin + `/get-appointment/${date}`;
+        fetch(url)
+          .then((response) => handleResponseError(response))
+          .then((data) => success(data))
+          .catch((error) => fail(error));
+      };
+    </script>
+  </body>
+</html>

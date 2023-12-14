@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Head -->
+  <%- include("layout/header") -%>
+  <body>
+    <!-- Navigation-->
+    <%- include("layout/navbar") -%>
+    <!-- Banner -->
+    <main class="banner-main">
+      <div class="banner-info">
+        <div class="heading">
+          <h1>ADD APPOINTMENT</h1>
+          <h2><a href="/" class="herf-tag">CLICK</a> HERE TO GO DASHBOARD</h2>
+        </div>
+      </div>
+    </main>
+
+    <!-- From -->
+    <div class="card container mt-5 mb-5" style="width: 60rem">
+      <div class="card-body">
+        <form
+          class="row g-3 needs-validation"
+          method="POST"
+          action="/admin-add-appointment"
+          id="contact-form"
+          name="contact-form"
+        >
+          <div class="col-12">
+            <div class="form-check">
+              <label class="form-check-label" for="invalidCheck">
+                <h5>Add Appointment Slot</h5>
+              </label>
+            </div>
+          </div>
+          <div class="col-12" style="display: flex">
+            <div class="col-md-4">
+              <label class="form-label">Date</label>
+              <input
+                class="form-control"
+                name="date"
+                id="date"
+                type="date"
+                onchange="changeDateHandler()"
+                placeholder="Enter first name"
+                required
+              />
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <!-- slot input-->
+                <div class="btn-group appointment">
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="option1"
+                    id="option1"
+                    autocomplete="off"
+                    value="09:00"
+                  />
+                  <label class="btn btn-outline-primary" for="option1"
+                    >9:00 - 9:30</label
+                  >
+
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="option1"
+                    id="option2"
+                    autocomplete="off"
+                    value="09:30"
+                  />
+                  <label class="btn btn-outline-primary" for="option2"
+                    >9:30 - 10:00</label
+                  >
+
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="option1"
+                    id="option3"
+                    autocomplete="off"
+                    value="10:00"
+                  />
+                  <label class="btn btn-outline-primary" for="option3"
+                    >10:00 - 10:30</label
+                  >
+
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="option1"
+                    id="option4"
+                    autocomplete="off"
+                    value="10:30"
+                  />
+                  <label class="btn btn-outline-primary" for="option4"
+                    >10:30 - 11:00</label
+                  >
+
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="option1"
+                    id="option5"
+                    autocomplete="off"
+                    value="11:00"
+                  />
+                  <label class="btn btn-outline-primary" for="option5"
+                    >11:00 - 11:30</label
+                  >
+
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="option1"
+                    id="option6"
+                    autocomplete="off"
+                    value="11:30"
+                  />
+                  <label class="btn btn-outline-primary" for="option6"
+                    >11:30 - 12:00</label
+                  >
+
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="option1"
+                    id="option7"
+                    autocomplete="off"
+                    value="12:00"
+                  />
+                  <label class="btn btn-outline-primary" for="option7"
+                    >12:00 - 12:30</label
+                  >
+
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="option1"
+                    id="option8"
+                    autocomplete="off"
+                    value="12:30"
+                  />
+                  <label class="btn btn-outline-primary" for="option8"
+                    >12:30 - 13:00</label
+                  >
+
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="option1"
+                    id="option9"
+                    autocomplete="off"
+                    value="13:00"
+                  />
+                  <label class="btn btn-outline-primary" for="option9"
+                    >13:00 - 13:30</label
+                  >
+
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="option1"
+                    id="option10"
+                    autocomplete="off"
+                    value="13:30"
+                  />
+                  <label class="btn btn-outline-primary" for="option10"
+                    >13:30 - 14:00</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <% if(isDisplayError) {%>
+          <h6 style="color: red">Already added slot.</h6>
+          <% } %>
+          <div class="col-12 text-center">
+            <button type="submit" class="btn btn-dark">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer-->
+    <%- include("layout/footer") -%>
+    <!-- JS -->
+    <%- include("layout/script") -%>
+    <script>
+      const option1 = document.getElementsByName("option1");
+
+      const handleResponseError = (response) => {
+        if (!response.ok) {
+          throw response.status + ": " + response.statusText;
+        }
+        return response.json();
+      };
+
+      const fail = (error) => {
+        console.log("not found data");
+      };
+
+      const success = (data) => {
+        option1.forEach((tag) => {
+          data.getAppointment.forEach((value) => {
+            if (tag.value == value.time) tag.setAttribute("disabled", true);
+          });
+        });
+      };
+
+      const changeDateHandler = () => {
+        let date = document.getElementById("date").value;
+        option1.forEach((tag) => {
+          tag.removeAttribute("disabled");
+        });
+        const url = window.location.origin + `/get-appointment/${date}`;
+        fetch(url)
+          .then((response) => handleResponseError(response))
+          .then((data) => success(data))
+          .catch((error) => fail(error));
+      };
+    </script>
+  </body>
+</html>
